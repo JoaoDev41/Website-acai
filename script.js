@@ -35,6 +35,40 @@ document.addEventListener("keydown", (event) => {
 });
 
 const videos = [...document.querySelectorAll("video")];
+const heroVideo = document.querySelector(".hero-video");
+
+const ensureHeroPlayback = () => {
+  if (!heroVideo) return;
+
+  heroVideo.muted = true;
+  heroVideo.defaultMuted = true;
+  heroVideo.playsInline = true;
+  heroVideo.setAttribute("muted", "");
+  heroVideo.setAttribute("playsinline", "");
+  heroVideo.setAttribute("webkit-playsinline", "");
+
+  const playback = heroVideo.play();
+  if (playback?.catch) playback.catch(() => {});
+};
+
+ensureHeroPlayback();
+heroVideo?.addEventListener("loadeddata", ensureHeroPlayback);
+heroVideo?.addEventListener("canplay", ensureHeroPlayback);
+window.addEventListener("pageshow", ensureHeroPlayback);
+
+document.addEventListener("visibilitychange", () => {
+  if (!document.hidden) ensureHeroPlayback();
+});
+
+// Alguns modos de economia de bateria bloqueiam qualquer autoplay. A primeira
+// interação do usuário funciona como tentativa adicional nesses dispositivos.
+["pointerdown", "touchstart"].forEach((eventName) => {
+  document.addEventListener(eventName, ensureHeroPlayback, {
+    passive: true,
+    once: true,
+  });
+});
+
 const videoObserver = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
