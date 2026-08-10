@@ -35,27 +35,6 @@ document.addEventListener("keydown", (event) => {
 });
 
 const videos = [...document.querySelectorAll("video")];
-const heroVideo = document.querySelector(".hero-video");
-
-const playHeroVideo = () => {
-  if (!heroVideo) return;
-
-  heroVideo.muted = true;
-  heroVideo.defaultMuted = true;
-  heroVideo.playsInline = true;
-  heroVideo.setAttribute("muted", "");
-  heroVideo.setAttribute("playsinline", "");
-  heroVideo.play().catch(() => {});
-};
-
-playHeroVideo();
-window.addEventListener("pageshow", playHeroVideo);
-document.addEventListener("visibilitychange", () => {
-  if (!document.hidden) playHeroVideo();
-});
-document.addEventListener("touchstart", playHeroVideo, { once: true, passive: true });
-document.addEventListener("click", playHeroVideo, { once: true });
-
 const videoObserver = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
@@ -292,41 +271,6 @@ if (window.gsap && window.ScrollTrigger) {
           },
         });
       });
-
-      const mobileMomentsTimeline = gsap.timeline({
-        scrollTrigger: {
-          trigger: ".reel-card--center",
-          start: "top 76%",
-          end: "top 14%",
-          scrub: 0.6,
-        },
-      });
-
-      mobileMomentsTimeline
-        .to(
-          ".reel-card--center .reel-label, .reel-card--center .reel-arrow",
-          { opacity: 0, duration: 0.18 },
-          0
-        )
-        .to(
-          ".reel-card--center video",
-          { opacity: 0, scale: 1.04, duration: 0.45, ease: "power1.inOut" },
-          0.12
-        )
-        .fromTo(
-          ".transition-photo",
-          { opacity: 0, scale: 1.08 },
-          { opacity: 1, scale: 1, duration: 0.45, ease: "power2.out" },
-          0.12
-        )
-        .fromTo(
-          ".transition-copy",
-          { opacity: 0, y: 24, scale: 0.9 },
-          { opacity: 1, y: 0, scale: 1, duration: 0.28, ease: "power3.out" },
-          0.55
-        );
-
-      return () => mobileMomentsTimeline.kill();
     });
 
     const contactTimeline = gsap.timeline({

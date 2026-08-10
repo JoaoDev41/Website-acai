@@ -620,7 +620,7 @@ button {
   box-shadow: 0 1.2rem 3rem rgba(57, 0, 61, 0.22);
 }
 
-.product-card:not(.product-card--intro):not(.product-card--cta) > a {
+.product-card > a {
   display: block;
   width: 100%;
   height: 100%;
@@ -762,7 +762,6 @@ button {
   align-items: center;
   justify-content: space-between;
   width: 82%;
-  height: auto;
   margin-top: 2rem;
   padding: 0.8rem 0.85rem 0.8rem 1.2rem;
   color: var(--purple-deep);
@@ -1379,10 +1378,9 @@ button {
     min-height: 32rem;
   }
 
+  .transition-photo,
   .transition-copy {
-    width: 100%;
-    justify-content: center;
-    font-size: clamp(2.8rem, 15vw, 5.2rem);
+    display: none;
   }
 
   .contact-inner {
@@ -1429,16 +1427,5 @@ button {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
-  }
-
-  @media (max-width: 720px) {
-    .reel-card--center video {
-      opacity: 0;
-    }
-
-    .transition-photo,
-    .transition-copy {
-      opacity: 1;
-    }
   }
 }
